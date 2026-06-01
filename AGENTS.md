@@ -12,9 +12,9 @@ It does not decrypt the API response itself and does not scrape product cards fr
 
 ## Current Structure
 
-- `extension/manifest.json`: MV3 manifest. It injects two content scripts and intentionally has no toolbar popup.
-- `extension/src/pageHook.js`: Runs in `world: "MAIN"` at `document_start`. Wraps `fetch`, `XMLHttpRequest.open`, and `JSON.parse` to detect parsed product data after the site decrypts the response.
-- `extension/src/content.js`: Runs in `world: "ISOLATED"`. Receives parsed product arrays, normalizes fields, and renders the right-side floating panel.
+- `manifest.json`: MV3 manifest. It injects two content scripts and intentionally has no toolbar popup.
+- `src/pageHook.js`: Runs in `world: "MAIN"` at `document_start`. Wraps `fetch`, `XMLHttpRequest.open`, and `JSON.parse` to detect parsed product data after the site decrypts the response.
+- `src/content.js`: Runs in `world: "ISOLATED"`. Receives parsed product arrays, normalizes fields, and renders the right-side floating panel.
 - `README.md`: User-facing install and usage notes.
 
 ## Important Constraints
@@ -61,23 +61,23 @@ CSV/JSON exports should stay aligned with the fields shown in the floating panel
 Run these checks after code changes:
 
 ```sh
-node --check extension/src/pageHook.js
-node --check extension/src/content.js
-node -e "JSON.parse(require('fs').readFileSync('extension/manifest.json','utf8')); console.log('manifest ok')"
+node --check src/pageHook.js
+node --check src/content.js
+node -e "JSON.parse(require('fs').readFileSync('manifest.json','utf8')); console.log('manifest ok')"
 ```
 
 Useful residue checks:
 
 ```sh
-rg -n "popup|default_popup|activeTab|storage|chrome\\.tabs|chrome\\.storage|商品ID|ID候选|DOM|MutationObserver|innerText|all-goods-wrapper" extension README.md
+rg -n "popup|default_popup|activeTab|storage|chrome\\.tabs|chrome\\.storage|商品ID|ID候选|DOM|MutationObserver|innerText|all-goods-wrapper" src README.md manifest.json
 ```
 
 Expected source files:
 
 ```text
-extension/manifest.json
-extension/src/content.js
-extension/src/pageHook.js
+manifest.json
+src/content.js
+src/pageHook.js
 ```
 
 ## Development Style
