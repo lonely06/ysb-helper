@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "药师帮数据整理助手",
+  "version": "0.1.0",
+  "description": "整理药师帮搜索结果，支持筛选、复制和导出 CSV/JSON。",
+  "host_permissions": ["https://dian.ysbang.cn/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://dian.ysbang.cn/*"],
+      "js": ["src/pageHook.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["https://dian.ysbang.cn/*"],
+      "js": ["src/content.js"],
+      "run_at": "document_start",
+      "world": "ISOLATED"
+    }
+  ]
+}
